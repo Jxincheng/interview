@@ -62,10 +62,11 @@
     //   console.log('data',data,MS);
     //   MS.innerHTML = data;
     // })
+    let link = window.location.origin + window.location.pathname;
     window.$docsify = {
       // repo: 'https://github.com/Jxincheng/interview.git',
       name: 'Jxc学习笔记',
-      nameLink: '/interview/#/README',
+      nameLink: link,
       coverpage: true,
       loadSidebar: true,
       // loadNavbar: true,
@@ -117,5 +118,9 @@
 
   <!-- 外链脚本 -->
   <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/external-script.min.js"></script>  -->
+
+  <!-- 
+    .nojekyll 文件  用于阻止 Github Pages 忽略掉下划线开头的文件
+   -->
 </body>
 </html>
