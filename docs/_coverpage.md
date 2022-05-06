@@ -7,6 +7,5 @@
 * Java、LeetCode、机器学习   
 - and so on  :heartpulse: -->
 
-
 <!-- [GitHub](https://github.com/XiaoJing-C/Learning-records.git) -->
-[开始](README.md)
+[开始学习](README.md)
