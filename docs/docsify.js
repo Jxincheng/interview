@@ -757,8 +757,8 @@
 
   function he() {
       var e, t = d("section.cover");
-      S(g, "remove", "sticky")
-    //   t && (e = t.getBoundingClientRect().height, window.pageYOffset >= e || t.classList.contains("hidden") ? S(g, "add", "sticky") : S(g, "remove", "sticky"))
+    //   S(g, "remove", "sticky")
+      t && (e = t.getBoundingClientRect().height, window.pageYOffset >= e || t.classList.contains("hidden") ? S(g, "add", "sticky") : S(g, "remove", "sticky"))
   }
 
   function de(e, t, r, n) {
@@ -3112,8 +3112,8 @@
           })), e = ".sidebar", this.router, null != (e = d(e)) && x(e, "click", function(e) {
               e = e.target;
               "A" === e.nodeName && e.nextSibling && e.nextSibling.classList && e.nextSibling.classList.contains("app-sub-sidebar") && S(e.parentNode, "collapse")
-        //   }), this.config.coverpage ? h || x("scroll", he) : g.classList.add("sticky")
-          }), this.config.coverpage ? h || x("scroll", he) : g.classList.add("ready")
+          }), this.config.coverpage ? h || x("scroll", he) : g.classList.add("sticky")
+        //   }), this.config.coverpage ? h || x("scroll", he) : g.classList.add("ready")
       }, t
   }(function(e) {
       function t() {

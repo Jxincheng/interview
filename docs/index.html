@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="./index.css">
 </head>
-<body class="ready">
+<body>
   <div id="app">Loading...</div>
   <!-- <section class="cover show">
     <div class="cover-main">
@@ -53,41 +53,29 @@
     </section>
   </main> -->
   <script>
-    // console.log(window);
-    // let MS = document.querySelector(".markdown-section");
-    // let url = window.location.origin + "/README.md";
-    // // let url = "https://github.com/Jxincheng/interview/README.md";
-    // fetch(url)
-    // .then(data => {
-    //   console.log('data',data,MS);
-    //   MS.innerHTML = data;
-    // })
     let link = window.location.origin + window.location.pathname;
     window.$docsify = {
       // repo: 'https://github.com/Jxincheng/interview.git',
       name: 'Jxc学习笔记',
       nameLink: link,
+      // 开启封面，加载_coverpage.md
       coverpage: true,
+      // 开启侧边栏定制，加载_sidebar.md
       loadSidebar: true,
+      // 开启导航栏，加载_navbar.md
       // loadNavbar: true,
+      count:{
+        countable: true,
+        fontsize: '0.9em',
+        color: 'rgb(90,90,90)',
+        language: 'chinese'
+      },
     }
   </script>
-  <script src="./docsify.js"></script>
+  <!-- <script src="./docsify.js"></script> -->
   <!-- <script>
     window.$docsify = {
-      repo: 'https://github.com/XiaoJing-C/Learning-records.git',
-      name: 'XiaoJ\'s 学习笔记',
-      nameLink: '/Learning-records/#/README',
-      coverpage: true,
-      loadSidebar: true,
-      loadNavbar: true,
-      // subMaxLevel: 3,
-      count:{
-        countable:true,
-        fontsize:'0.9em',
-        color:'rgb(90,90,90)',
-        language:'chinese'
-      },
+      subMaxLevel: 3,
       search: 'auto',
       search: {
         maxAge: 86400000,
@@ -101,12 +89,19 @@
   </script> -->
   <!-- Docsify v4 -->
   <!-- <script src="//cdn.jsdelivr.net/npm/docsify@4"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script> -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script> 图片缩放 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+
+  <!-- 图片缩放 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script> 
   <!-- <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script> 复制到剪切板 -->
-  <!-- <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script> 分页导航插件 -->
-  <!-- <script src="//unpkg.com/docsify-count/dist/countable.js"></script> 统计字数并显示 -->
+
+  <!-- 分页导航插件 -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>  -->
+
+  <!-- 统计字数并显示 -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script> 
 
   <!-- 代码高亮 -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>

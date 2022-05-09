@@ -1,5 +1,6 @@
 * Introduction
   * [简介](README.md)
+  * [查看emoji](emoji.md)
 
 * React
   * [简介](React/%E7%AE%80%E4%BB%8B.md)
