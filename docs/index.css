@@ -24,6 +24,23 @@ strong.str {
   background-color: #ffd8a6;
   color: #142850;
   display: inline-block;
-  border-radius: 10px;
-  padding: 5px;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+strong.web {
+  padding: 8px 8px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  margin: 16px;
+  transition: all .3s ease;
+}
+strong.web a {
+  text-decoration: none;
+  color: #343a40;
+}
+strong.web:hover {
+  box-shadow: 0 0 10px 0 #dbdada;
+}
+strong.web:hover a {
+  color: red;
 }
