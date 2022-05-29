@@ -27,20 +27,26 @@ strong.str {
   border-radius: 5px;
   padding: 2px 5px;
 }
-strong.web {
+
+div.share-item {
+  display: inline-block;
+  width: 220px;
   padding: 8px 8px;
   border-radius: 5px;
   border: 1px solid #eee;
-  margin: 16px;
+  margin: 5px;
   transition: all .3s ease;
+  font-weight: 600;
+  text-align: center;
 }
-strong.web a {
+div.share-item a{
   text-decoration: none;
   color: #343a40;
 }
-strong.web:hover {
+div.share-item:hover {
   box-shadow: 0 0 10px 0 #dbdada;
+  /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 10%); */
 }
-strong.web:hover a {
+div.share-item:hover a {
   color: red;
 }
