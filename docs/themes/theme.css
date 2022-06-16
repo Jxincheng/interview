@@ -1,0 +1,45 @@
+body {
+  --theme-color: #087ea4;
+
+  --yellow-5: #fef5e7;
+  --yellow-30: #fabd62;
+  --yellow-40: #db7d27;
+  --yellow-50: #c76a15;
+  --yellow-60: #b65700;
+
+  --purple-5: #f3f4fd;
+  --purple-10: #e7e9fb;
+  --purple-30: #8891ec;
+  --purple-40: #6b75db;
+  --purple-50: #575fb7;
+  --purple-60: #2b3491;
+
+  --green-5: #f4fbf9;
+  --green-40: #44ac99;
+  --green-50: #388f7f;
+  --green-60: #2b6e62;
+
+  --gray-5: #f6f7f9;
+  --gray-10: #ebecf0;
+  --gray-20: #bcc1cd;
+  --gray-30: #d1d5db;
+  --gray-50: #5e687e;
+  --gray-60: #4e5769;
+  --gray-70: #404756;
+  --gray-80: #343a46;
+  --gray-90: #23272f;
+  --gray-95: #16181d;
+
+  --blue-40: #149eca;
+
+  --red-5: #ffeeee;
+  --red-30: #d07d77;
+  --red-40: #c1554d;
+
+  --bg-link: #087ea4;
+  --text-link: #087ea4;
+  --bg-highlight: #e6f7ff;
+  --bg-card: #f6f7f9;
+  --bg-white: #ffffff;
+  --bg-error: #ffcdca;
+}
