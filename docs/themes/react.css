@@ -68,10 +68,14 @@ body {
     -webkit-font-smoothing: antialiased;
     color: #1c1e21;
     font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     letter-spacing: 0;
     margin: 0;
-    overflow-x: hidden
+    overflow: hidden
+}
+
+li>p, .markdown-section li {
+    font-family: 'Courier New', sans-serif;
 }
 
 img {
@@ -247,7 +251,7 @@ main.hidden {
 }
 
 .sidebar>h1 {
-    margin: 0 auto 1rem;
+    margin: .5rem auto;
     font-size: 1.5rem;
     font-weight: 300;
     text-align: center
@@ -266,7 +270,7 @@ main.hidden {
 .sidebar .sidebar-nav {
     line-height: 2em;
     padding-bottom: 40px;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .sidebar .sidebar-nav::-webkit-scrollbar {
     background-color: #fff;
@@ -289,7 +293,7 @@ main.hidden {
 }
 
 .sidebar .sidebar-nav>ul {
-  margin: 0 0 0 15px;
+  margin: 0 0 0 7px;
   padding: 0
 }
 
@@ -301,6 +305,10 @@ main.hidden {
     margin: 0 0 0 15px;
     padding: 0
 } */
+
+.sidebar li>p {
+    font-family: "苹方-简", PingFang SC, sans-serif;
+}
 
 .sidebar li>p {
     font-weight: 700;
@@ -345,8 +353,8 @@ main.hidden {
     outline: none;
     padding: 10px;
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 0;
+    left: 300px;
     text-align: center;
     transition: opacity .3s;
     z-index: 30;
@@ -497,7 +505,7 @@ body.sticky .sidebar-toggle {
 .markdown-section p.pitfall {
   background: var(--yellow-5,#fef5e7);
   border-radius: 0.5rem;
-  padding: 1rem
+  padding: 12px 24px 12px 22px;
 }
 
 .markdown-section p.pitfall.border-l {
@@ -520,6 +528,15 @@ body.sticky .sidebar-toggle {
 }
 .markdown-section div.card ul,
 .markdown-section div.card ol {
+  margin-bottom: 0;
+}
+.markdown-section div.card.mtb ul,
+.markdown-section div.card.mtb ol {
+    margin-top: 5px;
+  margin-bottom: 8px;
+}
+.markdown-section div.card.mtb ul:last-child,
+.markdown-section div.card.mtb ol:last-child {
   margin-bottom: 0;
 }
 .markdown-section div.card ul.digital {
@@ -684,7 +701,9 @@ section.cover {
 }
 
 section.cover.show {
-    display: flex
+    display: flex;
+    position: relative;
+    z-index: 50;
 }
 
 section.cover.has-mask .mask {
@@ -816,7 +835,7 @@ body {
 }
 
 .sidebar ul li ul {
-  padding: 0 0 0 15px;
+  padding: 0 0 0 10px;
 }
 
 .sidebar ul li ul li.active {
@@ -864,20 +883,26 @@ body {
 
 .markdown-section h3 {
     font-size: 1.5rem;
-    margin: 40px 0 .6rem
+    margin: 30px 0 .6rem
 }
 
 .markdown-section h4 {
-    font-size: 1.25rem
+    font-size: 1.25rem;
+    margin: 12px 0;
 }
 
 .markdown-section h5 {
-    font-size: 1rem
+    font-size: 1rem;
+    margin: 10px 0;
 }
 
 .markdown-section h6 {
     color: #777;
     font-size: 1rem
+}
+
+.markdown-section li p {
+    margin: .5em 0
 }
 
 .markdown-section figure,
@@ -894,7 +919,7 @@ body {
 
 .markdown-section ol,
 .markdown-section ul {
-    padding-left: 1.5rem
+    padding-left: 2rem
 }
 
 .markdown-section blockquote {
@@ -921,6 +946,10 @@ body {
 .markdown-section output:after,
 .markdown-section pre {
     font-family: Roboto Mono, Monaco, courier, monospace
+}
+
+.markdown-section code.cn {
+    font-family: 'courier New'
 }
 
 .markdown-section code {
@@ -959,9 +988,9 @@ body {
     white-space: pre-wrap
 }
 
-.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+/* .markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
     font-size: .8rem
-}
+} */
 
 .markdown-section pre {
     padding: 0 1.4rem;
@@ -973,8 +1002,8 @@ body {
 
 .markdown-section pre>code {
     color: #525252;
-    font-size: .8rem;
-    padding: 2.2em 5px;
+    font-size: 1rem;
+    padding: 1.6em 5px;
     line-height: inherit;
     margin: 0 2px;
     max-width: inherit;

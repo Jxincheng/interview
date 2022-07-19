@@ -17,15 +17,10 @@
 * JS
   * [var、let和const的区别](JS/var%E3%80%81let%E5%92%8Cconst%E7%9A%84%E5%8C%BA%E5%88%AB.md)
   * [new操作符](JS/new%E6%93%8D%E4%BD%9C%E7%AC%A6.md)
+  * [location.replace和location.href的区别](JS/location.replace%E5%92%8Clocation.href%E7%9A%84%E5%8C%BA%E5%88%AB.md)
 
 * React
   * [简介](React/%E7%AE%80%E4%BB%8B.md)
 
 * Vue
   * [简介](Vue/%E7%AE%80%E4%BB%8B.md)
-
-* LOL
-  * [教程](LOL/%E6%95%99%E7%A8%8B.md)
-
-* 分享
-  * [bt磁力资源](分享/bt%E7%A3%81%E5%8A%9B%E8%B5%84%E6%BA%90.md)
