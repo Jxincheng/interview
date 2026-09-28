@@ -955,6 +955,10 @@ body {
 .markdown-section code {
   background-color: var(--yellow-5);
 }
+.markdown-section code.gray {
+    background-color: #f2f1f1;
+    color: #1c1e21;
+}
 
 .markdown-section code,
 .markdown-section pre {
@@ -997,6 +1001,7 @@ body {
     line-height: 1.5rem;
     overflow: auto;
     word-wrap: normal;
+    background-color: var(--bg-white);
     box-shadow: 0 0 #0000,0 0 #0000,0px 0.8px 2px rgba(0,0,0,0.032),0px 2.7px 6.7px rgba(0,0,0,0.048),0px 12px 30px rgba(0,0,0,0.08);
 }
 
@@ -1075,7 +1080,8 @@ body {
 }
 
 .token.tag {
-    color: #2973b7
+    /* color: #2973b7 */
+    color: #f92752
 }
 
 .token.string {
@@ -1087,7 +1093,8 @@ body {
 }
 
 .token.attr-name {
-    color: #2973b7
+    /* color: #2973b7 */
+    color: #77c94b
 }
 
 .language-css .token.string,
@@ -1097,7 +1104,9 @@ body {
     color: #22a2c9
 }
 
-.token.attr-value,
+.token.attr-value {
+    color: #db7d27
+}
 .token.control,
 .token.directive,
 .token.unit {

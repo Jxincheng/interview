@@ -393,3 +393,23 @@ svg.doc-search-hit-select-icon {
   border-color: #087ea4;
   font-weight: 700;
 }
+
+.fx {
+  display: flex;
+}
+.fx div {
+  flex: 1;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.fx div:first-child {
+  margin-left: 0;
+}
+.fx div:last-child {
+  margin-right: 0;
+}
+.fx div h3,
+.fx div h4,
+.fx div h5 {
+  text-align: center;
+}

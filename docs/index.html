@@ -9,9 +9,78 @@
   <!-- <link rel="stylesheet" href="./themes/vue.css"> -->
   <link rel="stylesheet" href="./themes/react.css">
   <link rel="stylesheet" href="./index.css">
+  <style>
+    .demo {
+      position: fixed;
+      top: 0;
+      z-index: 50;
+    }
+    .demo img {
+      display: flex;
+    }
+    .prev, .next {
+      position: fixed;
+      top: 5%;
+      width: 50px;
+      background: black;
+      opacity: 0;
+      height: 90%;
+    }
+    .prev {
+      left: 0;
+    }
+    .next {
+      right: 0;
+      transform: rotate(180deg);
+    }
+    .menu {
+      position: fixed;
+      top: 35%;
+      left: 35%;
+      width: 30%;
+      height: 30%;
+      opacity: 0;
+    }
+    .menu-box {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      background-color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 5px 20px 10px;
+      opacity: .9;
+      height: 60%;
+      width: 100%;
+      display: none;
+      overflow-y: scroll;
+    }
+    .menu-box p {
+      height: 25px;
+      line-height: 25px;
+    }
+    .active {
+      color: blue;
+    }
+    #container {
+      width: 100vw;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 <body>
   <div id="app">Loading...</div>
+  <div class="demo">
+    <input type="file" id="picker" webkitdirectory multiple accept="image/*">
+    <img id="viewer">
+    <div id="title"></div>
+    <div class="prev" onclick="prevClick()">上一话</div>
+    <div class="next" onclick="nextClick()">下一话</div>
+    <div class="menu" onclick="menuClick()">目录</div>
+    <div class="menu-box"></div>
+    <div id="container"></div>
+  </div>
   <!-- <section class="cover show">
     <div class="cover-main">
       <p>
@@ -54,6 +123,200 @@
       <article class="markdown-section">内容</article>
     </section>
   </main> -->
+  <script>
+    // 严格：第01话 / 第1話 / 第01章 / Ch.01 / Chapter 1 / Vol.01 / Ep.5
+    const STRICT_RE =
+      /(?:第\s*)?(\d+(?:\.\d+)?)\s*(话|話|章|回|集|卷|篇|部)|(?:chapter|chap|ch|vol|volume|ep|episode)\.?\s*(\d+(?:\.\d+)?)/i;
+
+    function parseChapterStrict(text) {
+      const m = text.match(STRICT_RE);
+      if (!m) return null;
+      return {
+        num: parseFloat(m[1] ?? m[3]),
+        unit: m[2] || 'ch',
+        raw: m[0].trim(),
+      };
+    }
+
+    function parseChapterLoose(text) {
+      const s = parseChapterStrict(text);
+      if (s) return s;
+      const m = text.match(/^(\d+(?:\.\d+)?)$/);   // 纯数字目录 01 / 02
+      if (m) return { num: parseFloat(m[1]), unit: '', raw: m[0] };
+      return null;
+    }
+    const collator = new Intl.Collator('zh', { numeric: true, sensitivity: 'base' });
+
+  function organizeChapters(files) {
+    const groups = new Map();  // key -> chapter
+
+    for (const f of files) {
+      const parts = f.webkitRelativePath.split('/');
+      const fileName = parts.pop();
+      const dirs = parts;
+      // 1. 从最靠近文件的目录往外找章节名
+      let info = null;
+      for (let i = dirs.length - 1; i >= 0 && !info; i--) {
+        const hit = parseChapterLoose(dirs[i]);
+        if (hit) { hit.label = dirs[i]; info = hit; }
+      }
+
+      // 2. 目录里没有，从文件名找（只允许严格模式）
+      if (!info) {
+        const hit = parseChapterStrict(fileName);
+        if (hit) { hit.label = hit.raw; info = hit; }
+      }
+
+      // 3. 兜底：用最内层目录名，或归到"未分章"
+      if (!info) {
+        info = { num: null, unit: '', label: dirs[dirs.length - 1] || '(未分章)' };
+      }
+      
+      if (!groups.has(info.label)) {
+        groups.set(info.label, {
+          comic: dirs[0],
+          label: info.label,
+          num: info.num,
+          unit: info.unit,
+          pages: [],
+        });
+      }
+      groups.get(info.label).pages.push(f);
+    }
+     // 组内页面排序：001.jpg, 002.jpg, 010.jpg
+    for (const g of groups.values()) {
+      g.pages.sort((a, b) => collator.compare(a.name, b.name));
+    }
+
+    // 章节排序：有编号按编号，没编号（番外/SP/序章）排最后
+    const chapters = [...groups.values()].sort((a, b) => {
+      if (a.num != null && b.num != null) return a.num - b.num;
+      if (a.num != null) return -1;
+      if (b.num != null) return 1;
+      return collator.compare(a.label, b.label);
+    });
+
+    chapters.forEach((c, i) => (c.index = i));
+    return chapters;
+  }
+  </script>
+  <script>
+    const IMG_RE = /\.(jpe?g|png|webp|gif|avif|bmp)$/i;
+    // 关键：numeric 排序，否则 10.jpg 会排在 2.jpg 前面
+    // const collator = new Intl.Collator('zh', { numeric: true, sensitivity: 'base' });
+
+    let chapterPages = []
+    let pages = [];  // { name, url }
+    let index = 0;
+    let ci = 0;   // 当前章节
+    let pi = 0;   // 当前页
+
+    const title = document.getElementById('title');
+    const menuBox = document.querySelector('.menu-box')
+    const container = document.getElementById('container');
+
+    document.getElementById('picker').addEventListener('change', (e) => {
+      const files = [...e.target.files]
+        .filter(f => IMG_RE.test(f.name) || f.type.startsWith('image/'))
+        .sort((a, b) =>
+          collator.compare(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name)
+        );
+
+      pages.forEach(p => URL.revokeObjectURL(p.url));   // 释放旧的
+      // pages = files.map(f => ({
+      //   name: f.webkitRelativePath || f.name,
+      //   url: URL.createObjectURL(f),
+      // }));
+      // render();
+      index = 0;
+      
+      chapterPages = organizeChapters(files)
+      
+
+      // 生成目录
+      for(let i = 0; i < chapterPages.length; i++) {
+        const p = document.createElement('p');
+        p.innerHTML = chapterPages[i].label
+        ci == i && (p.className = 'active')
+        p.addEventListener('click', function() {
+          localStorage.setItem(`read-${chapterPages[i].comic}`, i)
+          ci = i
+          menuClick()
+          toRender(chapterPages, ci)
+          // location.reload()
+        })
+        menuBox.appendChild(p)
+      }
+
+      toRender(chapterPages, ci)
+      
+    });
+
+    function toRender(chapterPages, num) {
+      pages = chapterPages[num].pages.map(f => ({
+        name: chapterPages[num].label,
+        url: URL.createObjectURL(f),
+      }));
+      
+      title.innerText = chapterPages[num].label
+      render1(pages)
+    }
+
+    function render1(pages) {
+      container.innerHTML = ''
+      pages.forEach((p, i) => {
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.dataset.index = i;
+        img.src = p.url;      // 或滚动到附近再赋值
+        container.appendChild(img);
+      });
+    }
+
+    function render() {
+      const img = document.getElementById('viewer');
+      img.src = pages[index]?.url ?? '';
+      preload(index + 1);
+      preload(index - 1);
+    }
+
+    function preload(i) {
+      if (i < 0 || i >= pages.length) return;
+      new Image().src = pages[i].url;   // 预热浏览器缓存
+    }
+
+    function go(delta) {
+      index = Math.min(Math.max(index + delta, 0), pages.length - 1);
+      render();
+    }
+
+    // 键盘翻页
+    // addEventListener('keydown', e => {
+    //   if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+    //   if (e.key === 'ArrowLeft') go(-1);
+    // });
+
+
+    function prevClick() {
+      if (ci != 0) {
+        ci = ci - 1
+        toRender(chapterPages, ci)
+      }
+    }
+    function nextClick() {
+      if (ci < chapterPages.length - 1) {
+        ci = ci + 1
+        toRender(chapterPages, ci)
+      }
+    }
+    function menuClick() {
+    if (menuBox.style.display == 'block') {
+        menuBox.style.display = 'none'
+      } else {
+        menuBox.style.display = 'block'
+      }
+    }
+  </script>
   <script>
     let link = window.location.origin + window.location.pathname;
     let str = `/${window.encodeURIComponent('介绍')}/_sidebar.md`;

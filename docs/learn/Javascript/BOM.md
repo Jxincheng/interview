@@ -31,17 +31,28 @@ BOM(Browser Object Model) 是指<font color="#087ea4">浏览器对象模型</fon
 
 #### 1、属性
 
-1. <code>window.scrollX</code>    水平方向滚动条滚动后的距离
-2. <code>window.scrollY</code>    垂直方向滚动条滚动后的距离
-3. <code>window.scrollTo(x,y)</code> 设置浏览器当前滚动位置（距离浏览器可视区域顶部的位置）
-4. <code>window.scrollBy(x,y)</code> 设置基于当前位置滚动的距离，可以为负数
-5. <code>window.innerWidth/innerHeight</code> 浏览器可视区域的宽度/高度
-6. <code>window.outerWidth/outerHeight</code> 浏览器窗口的宽度/高度
+* **滚动**
+    1. <code>window.scrollX</code>    水平方向滚动条滚动后的距离
+    2. <code>window.scrollY</code>    垂直方向滚动条滚动后的距离
+    3. <code>window.scrollTo(x,y)</code> 设置浏览器当前滚动位置（距离浏览器可视区域顶部的位置）
+    4. <code>window.scrollBy(x,y)</code> 设置基于当前位置滚动的距离，可以为负数
+
+* **窗口大小**
+    1. <code>window.innerWidth/innerHeight</code> 浏览器可视区域的宽度/高度
+    2. <code>window.outerWidth/outerHeight</code> 浏览器窗口的宽度/高度
+    3. <code>document.documentElement.clientWidth/clientHeight</code> 返回页面视口的宽度/高度
+    4. <code>resizeTo()</code> 缩放窗口，接收新的宽度和高度值
+    5. <code>resizeBy()</code> 缩放窗口，接收宽度和高度各要缩放多少
+
+* **窗口位置与像素比**
+    1. <code>window.screenLeft/screenTop</code>  用于表示窗口相对于屏幕左侧和顶部的位置 ，返回值的单位是 CSS 像素。
+    2. <code>window.moveTo(x,y)</code>  接收要移动到的新位置的绝对坐标 x 和 y
+    3. <code>window.moveBy()</code>  接收相对当前位置在两个方向上移动的像素数
 
 #### 2、方法
 
-1. <code>alert()</code> 弹窗
-2. <code>prompt(question, initval)</code> 弹出输入框，返回值为具体的消息或null
+1. <code>alert()</code> 弹窗（警告框）
+2. <code>prompt(question, initval)</code> 弹出输入框（提示框），返回值为具体的消息或null
     * question 问题
     * initval 默认值
 3. <code>confirm(str)</code>  确认框，返回布尔值，若确定返回 true，取消返回 false
@@ -87,10 +98,11 @@ window.location.assign("http://www.mozilla.org");
 2. <code>reload()</code>  强制从服务器重新加载当前页面
 
 ```js
-window.location.reload(true);
+window.location.reload(); // 重新加载，可能是从缓存加载
+window.location.reload(true); // 重新加载，从服务器加载
 ```
 
-3. <code>replace()</code> 方法重新加载页面
+3. <code>replace()</code> 方法重新加载页面（重新加载后不会增加历史记录）
 
 ```js
 function reloadPageWithHash() {
@@ -113,7 +125,18 @@ location.href="html2/aa.html?name=lemon&age=17"
 ?name=lemon&age=17
 ```
 
-#### 4、navigator   提供浏览器详细信息
+7. <code>hostname</code>   返回 web 主机的域名
+8. <code>port</code>   返回 web 主机的端口
+9. <code>protocol</code>   返回所使用的 web 协议（http: 或 https:）
+
+#### 4、screen   包含有关用户屏幕的信息
+
+1. <code>width/height</code>  屏幕总宽度/总高度
+2. <code>availWidth/availHeight</code>  可用的屏幕宽度/高度
+3. <code>colorDepth</code>  色彩深度
+4. <code>pixelDepth</code>  色彩分辨率
+
+#### 5、navigator   提供浏览器详细信息
 
 1. <code>appCodeName</code>  浏览器代号
 2. <code>appName</code>  浏览器名称
